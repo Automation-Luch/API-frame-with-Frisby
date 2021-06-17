@@ -1,8 +1,8 @@
 const frisby = require("frisby");
-const { BASE_API, INVESTOR_URL, PASSWORD, EMAIL } = require("./credentials");
+const { BASE_API, INVESTOR_URL, PASSWORD, COMPANY_EMAIL } = require("./credentials");
 const TIME_OUT = 30000
 const tokenGrab = function (
-  email = EMAIL,
+  email = COMPANY_EMAIL,
   pass = PASSWORD,
   origin = INVESTOR_URL
 ) {
@@ -37,13 +37,13 @@ const investorGetRequest = function (request){
   return response;
 };
 
-const setGlobalSettingsJWT = function () {
+const setGlobalSettingsJWT = function (origin=INVESTOR_URL,token=tokenGrab()) {
   frisby.globalSetup({
     request: {
       headers: {
-        Authorization: tokenGrab(),
+        Authorization:token ,
         "Content-Type": "application/json",
-        Origin: INVESTOR_URL,
+        Origin: origin,
       },
     },timeout: (30*1000)
   });

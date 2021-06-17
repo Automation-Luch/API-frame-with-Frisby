@@ -4,7 +4,7 @@
   "description": "frisby",
   "main": "index.js",
   "scripts": {
-    "test": "jest api_spegc.js"
+    "test": "jest api_securer.js"
   },
   "repository": {
     "type": "git",
