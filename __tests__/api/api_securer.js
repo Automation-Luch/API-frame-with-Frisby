@@ -7,28 +7,27 @@ const {
   setGlobalSettingsJWT,
 } = require("../lib/helper");
 
-
-describe("Check that the response according to the expected result", function () {
+describe("Check that the response according to the expected result for company dashboard", function () {
   beforeAll(async function () {
     const token = await tokenGrab(COMPANY_EMAIL,PASSWORD,COMPANY_URL)
     await setGlobalSettingsJWT(COMPANY_URL,token);
-  });
+});
 
 
-    it("With json parse", async function () {
+    it("Check sum of cards per page", async function () {
             return frisby
-        .get('https://uat-api.securer.io/notification/me?page=1&limit=10', {
+        .get(`${BASE_API}/notification/me?page=1&limit=10`, {
         })
-        // .expect('status', 200).inspectBody()
         .expect('status', 200)
+        .expect('header', 'content-type', /application\/json/)
         .expect('jsonTypes','data', {
           data: Joi.array(),
-          // title: Joi.string(),
-          // body: Joi.string()
+        }).then(function (res) {
+          expect((res.json.data.data).length).toBe(10)
         })
-
       });
 
+      
   });
 
 
